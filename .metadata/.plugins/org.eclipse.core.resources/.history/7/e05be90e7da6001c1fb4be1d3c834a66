@@ -1,0 +1,36 @@
+package solution.shape;
+
+import java.lang.Math;
+
+/**
+ * @author ags
+ */
+public class Cylinder extends Shape {
+
+	private static final long serialVersionUID = 3256437006337718072L;
+
+	/**
+	 * Required for IO
+	 */
+	public Cylinder() {}
+
+	/**
+	 * @see solution.shape.Shape#buildMesh()
+	 */
+	public void buildMesh() {
+		// TODO: Build mesh 
+		double flatTolerance = .014;
+		int numFacets = 20;
+		int numTriangles = 76;
+		
+		double[] facets = new double[numFacets * 3];
+		double[] norms = new double[numFacets * 3];
+		
+		int[] triangles = new int[numTriangles];
+		
+		for (int i = 0; i < numFacets; i++) {
+			facets[i*3] = 
+			norms[i*3] = -1;
+		}
+	}
+}
