@@ -104,7 +104,7 @@ public abstract class Shape extends SceneNode {
 		if(mesh != null) {
 			// Set the pick id
 			gl.glLoadName(pickId);
-
+			gl.glColor4d(1,1,1,1);
 			// TODO - fill in code to set up the material parameters
 			gl.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, diffuseColor);
 			gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, specularColor);

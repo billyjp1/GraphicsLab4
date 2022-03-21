@@ -133,6 +133,9 @@ public class Mesh {
 				int p1 = triangles.get(i*3);
 				int p2 = triangles.get(i*3+1);
 				int p3 = triangles.get(i*3+2);
+//System.out.println("Point1: "+verts.get(p1*3)+" "+verts.get(p1*3+1)+" "+verts.get(p1*3+2));
+//System.out.println(" Point2: "+verts.get(p2*3)+" "+verts.get(p2*3+1)+" "+verts.get(p2*3+2));	
+//System.out.println(" Point3: "+verts.get(p3*3)+" "+verts.get(p3*3+1)+" "+verts.get(p3*3+2));
 				gl.glNormal3f(normals.get(p1*3), normals.get(p1*3+1), normals.get(p1*3+2));
 				gl.glVertex3f(verts.get(p1*3), verts.get(p1*3+1), verts.get(p1*3+2));
 				gl.glNormal3f(normals.get(p2*3), normals.get(p2*3+1), normals.get(p2*3+2));
