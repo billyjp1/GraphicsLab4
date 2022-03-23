@@ -9,7 +9,7 @@ public class Cylinder extends Shape {
 
 	private static final long serialVersionUID = 3256437006337718072L;
 
-	//static double curTol = -1;
+	static double curTol = -1;
 	private transient static Mesh cylinderMesh;
 	/**
 	 * Required for IO
@@ -21,11 +21,11 @@ public class Cylinder extends Shape {
 	 */
 	public void buildMesh() {
 		// TODO: Build mesh 
-//		if(TOLERANCE == curTol) {
-//			mesh = cylinderMesh;
-//			return;
-//		}
-		double curTol = TOLERANCE;
+		if(TOLERANCE == curTol) {
+			mesh = cylinderMesh;
+			return;
+		}
+		curTol = TOLERANCE;
 		double flatness = Math.toDegrees(Math.acos(1-curTol)) * 2;
 		flatness = 360 / flatness;
 		int numVerts = (int)Math.ceil(flatness);
@@ -37,7 +37,7 @@ public class Cylinder extends Shape {
 		float[] normData = new float[numVerts*15];
 		
 		int[] triData = new int[numTriData*3];
-System.out.println("Verts = "+numVerts+"   Triangles = "+numTriData);
+//System.out.println("Verts = "+numVerts+"   Triangles = "+numTriData);
 		
 		int k = 0;
 		int j = 6;
@@ -115,7 +115,7 @@ System.out.println("Verts = "+numVerts+"   Triangles = "+numTriData);
 			j+=4;
 		}
 		i-=2;
-		triData[i*3] = k;
+		triData[i*3] = k; 
 		triData[i*3+1] = 3;
 		triData[i*3+2] = j;
 		

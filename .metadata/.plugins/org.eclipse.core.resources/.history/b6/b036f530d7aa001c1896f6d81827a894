@@ -1,0 +1,79 @@
+package solution.shape;
+
+/**
+ * @author ags
+ */
+public class Sphere extends Shape {
+
+	private static final long serialVersionUID = 3256437006337718072L;
+
+	static double curTol = -1;
+	private int numRings;
+	private transient static Mesh sphereMesh;
+	/**
+	 * Required for IO
+	 */
+	public Sphere() {}
+
+	/**
+	 * @see solution.shape.Shape#buildMesh()
+	 */
+	public void buildMesh() {
+		//TODO: Build mesh
+		if(TOLERANCE == curTol) {
+			mesh = sphereMesh;
+			return;
+		}
+		curTol = TOLERANCE;
+		double flatness = Math.toDegrees(Math.acos(1-curTol)) * 2;
+		flatness = 360 / flatness;
+		int numVerts = (int)Math.ceil(flatness);
+		if (numVerts%2==1) numVerts++;
+		//numVerts *= 2;
+		int numTriData = (int) Math.pow(numVerts, 2);
+		
+		float[] vertData = new float[numVerts*300];
+		float[] normData = new float[numVerts*300]; 
+		
+		int[] triData = new int[numTriData*3];
+		
+		numRings = 1+(numVerts/2);
+System.out.println(numVerts + "    " + numRings);
+		//angle to the second ring from the top
+		double ringAngle = Math.PI/2 - ((Math.PI / (numRings)) * 1);
+System.out.println(ringAngle + "   degree " + Math.toDegrees(ringAngle));
+		double theta = (Math.PI*2)/numVerts; 
+		//Top of sphere
+		int i = 0;
+		int j = 0;
+		for (;i < numVerts; i++) {
+			vertData[j] = 0;
+			vertData[j+1] = 1;
+			vertData[j+2] = 0;
+			normData[j] = (float)(Math.cos(ringAngle) * Math.cos(theta*i));
+			normData[j+1] = (float)Math.sin(ringAngle);
+			normData[j+2] = (float)(Math.cos(ringAngle) * Math.sin(theta*i));
+			j+=3;
+		}
+		for (i=0;i < numVerts*2; i++) {
+			vertData[j] = (float)(Math.cos(ringAngle) * Math.cos(theta*i));
+			vertData[j+1] = (float)Math.sin(ringAngle);
+			vertData[j+2] = (float)(Math.cos(ringAngle) * Math.sin(theta*i));
+System.out.println("X: "+vertData[j]+"   Y: "+vertData[j+1]+"   Z: "+vertData[j+2]);
+			normData[j] = (float)(Math.cos(ringAngle) * Math.cos(theta*i));
+			normData[j+1] = (float)Math.sin(ringAngle);
+			normData[j+2] = (float)(Math.cos(ringAngle) * Math.sin(theta*i));
+			j+=3;
+		}
+		
+		i = 0;
+		for(;i < numVerts; i++) {
+			triData[i*3] = i;
+			triData[i*3+1] = ((i+2) % numVerts)+numVerts;
+			triData[i*3+2] = ((i+1)% numVerts)+numVerts;
+		}
+		sphereMesh = new Mesh(vertData, triData, normData);
+		mesh = sphereMesh;
+	}
+	
+}

@@ -1,0 +1,29 @@
+package solution.shape;
+
+/**
+ * @author ags
+ */
+public class Sphere extends Shape {
+
+	private static final long serialVersionUID = 3256437006337718072L;
+
+	static double curTol = -1;
+	private transient static Mesh sphereMesh;
+	/**
+	 * Required for IO
+	 */
+	public Sphere() {}
+
+	/**
+	 * @see solution.shape.Shape#buildMesh()
+	 */
+	public void buildMesh() {
+		//TODO: Build mesh
+		if(TOLERANCE == curTol) {
+			mesh = cylinderMesh;
+			return;
+		}
+		curTol = TOLERANCE;
+	} 
+
+}

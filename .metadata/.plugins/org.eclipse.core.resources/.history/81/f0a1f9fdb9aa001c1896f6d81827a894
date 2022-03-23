@@ -1,0 +1,59 @@
+package solution.shape;
+
+/**
+ * @author ags
+ */
+public class Sphere extends Shape {
+
+	private static final long serialVersionUID = 3256437006337718072L;
+
+	static double curTol = -1;
+	private transient static Mesh sphereMesh;
+	/**
+	 * Required for IO
+	 */
+	public Sphere() {}
+
+	/**
+	 * @see solution.shape.Shape#buildMesh()
+	 */
+	public void buildMesh() {
+		//TODO: Build mesh
+		if(TOLERANCE == curTol) {
+			mesh = sphereMesh;
+			return;
+		}
+		curTol = TOLERANCE;
+		double flatness = Math.toDegrees(Math.acos(1-curTol)) * 2;
+		flatness = 360 / flatness;
+		int numVerts = (int)Math.ceil(flatness);
+		if (numVerts%2==1) numVerts++;
+		numVerts *= 2;
+		int numTriData = (int) Math.pow(numVerts, 2);
+		
+		float[] vertData = new float[numVerts*15];
+		float[] normData = new float[numVerts*15];
+		
+		int[] triData = new int[numTriData*3];
+		
+		int numRings = numVerts/2 + 1;
+		
+		double circTheta = (Math.PI*2) / numVerts;
+		int k = 0;
+		for (int i = 0; i < numVerts; i+=numRings) {
+			
+			
+			for (int j = i; j < numRings; j++) {
+				double theta = j*(Math.PI / (numRings-1)) - (Math.PI/2);
+				vertData[k] = (float)Math.sin(theta);
+				vertData[k+1] = (float)Math.cos(theta);
+				vertData[k+2] = (float)Math.sin(circTheta*i);
+System.out.println("X: "+vertData[k]+"   Y: "+vertData[k+1]+"   Z: "+vertData[k+2]);
+				k+=3;
+			}
+			
+		}
+		
+	} 
+
+}
