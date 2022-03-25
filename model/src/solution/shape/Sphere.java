@@ -35,8 +35,8 @@ public class Sphere extends Shape {
 		float[] normData = new float[numVerts*600]; 
 		int[] triData = new int[numTriData*3];
 		
-		numRings = 1+(numVerts/2);
-System.out.println(numVerts + "    " + numRings);
+		numRings = (numVerts/2);
+//System.out.println(numVerts + "    " + numRings);
 
 		//Top of sphere
 		int i = 0;
@@ -51,7 +51,7 @@ System.out.println(numVerts + "    " + numRings);
 		
 		//angle to the second ring from the top
 		double ringAngle = getRingAngle(1);
-System.out.println(ringAngle + "   degree " + Math.toDegrees(ringAngle));
+//System.out.println(ringAngle + "   degree " + Math.toDegrees(ringAngle));
 		double theta = (Math.PI*2)/numVerts; 
 		for (i=0;i < numVerts; i++) {
 			vertData[j] = (float)(Math.cos(ringAngle) * Math.cos(theta*i));
@@ -66,7 +66,7 @@ System.out.println(ringAngle + "   degree " + Math.toDegrees(ringAngle));
 		
 		//Body of sphere
 		int k;
-		for (k = 2; k < numRings -2;k++) {
+		for (k = 2; k < numRings-1;k++) {
 			ringAngle = getRingAngle(k);
 			for (i=0; i < numVerts; i++) {
 				vertData[j] = (float)(Math.cos(ringAngle) * Math.cos(theta*i));
@@ -78,7 +78,6 @@ System.out.println(ringAngle + "   degree " + Math.toDegrees(ringAngle));
 				normData[j+2] = (float)(Math.cos(ringAngle) * Math.sin(theta*i));
 				j+=3;
 			}
-System.out.println("Made ring #"+k);
 		}
 		
 		//Bottom of sphere
@@ -104,10 +103,6 @@ System.out.println("Made ring #"+k);
 		normData[j+2] = 0;
 		
 		
-		
-		
-		
-		
 		//Top of sphere
 		j = 0;
 		for(i = 0;i < numVerts; i++) {
@@ -120,19 +115,19 @@ System.out.println("Made ring #"+k);
 		
 		//Body of sphere
 		int curRing = 1;
-		for (k = 1; k < numRings-2;k++) {
-			 
+		for (k = 1; k < numRings-1;k++) {
 			for (int g = 0; g < numVerts; g++) {
 				triData[j] = curRing + g;
-				triData[j+1] = curRing + numVerts + (g+1)%numVerts;
-				triData[j+2] = curRing + (g+1)%numVerts;
-				
-				triData[j+3] = curRing + g;
-				triData[j+4] = curRing + numVerts + g;
-				triData[j+5] = curRing + numVerts + (g+1)%numVerts;
+				triData[j+1] = curRing + (g+1)%numVerts;
+				triData[j+2] = curRing + numVerts + g%numVerts;
+//System.out.println("p1: "+triData[j]+"   p2: "+triData[j+1] + "   p3: "+triData[j+2]);
+				triData[j+3] = curRing + (g+1)%numVerts;
+				triData[j+4] = curRing + numVerts + (g+1)%numVerts;
+				triData[j+5] = curRing + numVerts + (g)%numVerts;
+//System.out.println("p1: "+triData[j+3]+"   p2: "+triData[j+4] + "   p3: "+triData[j+5]);
 				j+=6;
-				curRing+=numVerts;
 			}
+			curRing+=numVerts;
 		}
 		
 		//Bottom of sphere
