@@ -3,9 +3,11 @@ package solution.manip;
 import jgl.GL;
 import modeler.GLJPanel;
 import modeler.scene.Camera;
+import modeler.scene.PerspectiveCamera;
 import modeler.ui.TransformationAttributePanel;
 import solution.scene.Transformation;
 
+import javax.vecmath.Point3f;
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3f;
 
@@ -59,6 +61,73 @@ public abstract class Manip {
 		outZ.set(0,0,1);
 	}
 
+	/**
+	 * Compute the viewing ray from the eye point through the mouse location into the scene.
+	 * 
+	 * @param mouse the 2D mouse location in the view rectangle [-1, 1]
+	 * @param p the point to store the origin for the ray
+	 * @param d the vector to store the direction of the ray
+	 */
+	public void computeViewingRay(Vector2f mouse, Point3f p, Vector3f d) {
+		// TODO 
+		PerspectiveCamera pc = (PerspectiveCamera)c;
+		Point3f targ = pc.getTarget();
+		float fovY= pc.getFovY();
+		Point3f eye = pc.getEye();
+		p.set(eye);
+		
+		float dist = eye.distance(targ);
+		//float temp = (float)Math.toRadians(fovY/2.0);
+		float v = (float)Math.tan((float)Math.toRadians(fovY/2.0)) * dist;
+		float aspect = pc.aspect;
+		
+		Vector3f q = new Vector3f(targ);
+		
+		Vector3f arg1 = new Vector3f(pc.getUp());
+		arg1.scale(v);
+		arg1.scale(mouse.y);
+		q.add(arg1);
+		
+		Vector3f arg2 = new Vector3f(pc.getRight());
+		arg2.scale(v);
+		arg2.scale(aspect);
+		arg2.scale(mouse.x);
+		q.add(arg2);
+		
+		q.sub(eye);
+		//q.normalize();
+		d.set(q);
+	}
+
+	/**
+	 * Compute the ray from the center of the RGB axes down the X, Y, or Z axis (depending on what is picked). 
+	 * 
+	 * @param p the point to store the origin of the ray
+	 * @param d the vector to store the direction of the ray
+	 */
+	public void computeAxisRay(Point3f p, Vector3f d) {
+		// TODO
+		PerspectiveCamera pc = (PerspectiveCamera)c;
+		Point3f origin;
+	}
+	
+	/**
+	 * Compute the pseudointersection between two rays, returning the t value for the second ray.
+	 * 
+	 * ray1 = a + t1*d
+	 * ray2 = b + t2*e
+	 *  
+	 * @param a origin of first ray
+	 * @param d direction of first ray
+	 * @param b origin of second ray
+	 * @param e direction of second ray
+	 * @return t2, the t-value for the point on the second ray 
+	 */
+	public float computePseudointersection(Point3f eye, Vector3f direction, Point3f z3, Vector3f a) {
+		// TODO 
+		return 0;
+	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Various methods for controlling manipulators
 	////////////////////////////////////////////////////////////////////////////////////////////////////
