@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="Rerun tests.ModelTest3.testComputeViewingRay" project="model" tests="1" started="1" failures="0" errors="0" ignored="0">
-  <testcase name="testComputeViewingRay" classname="tests.ModelTest3" time="1.38"/>
-</testrun>

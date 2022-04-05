@@ -72,13 +72,13 @@ public abstract class Manip {
 		// TODO 
 		PerspectiveCamera pc = (PerspectiveCamera)c;
 		Point3f targ = pc.getTarget();
-		float fovY= pc.getFovY();
+		//float fovY= pc.getFovY();
+		float fovY = pc.getHeight();
 		Point3f eye = pc.getEye();
 		p.set(eye);
 		
 		float dist = eye.distance(targ);
-		//float temp = (float)Math.toRadians(fovY/2.0);
-		float v = (float)Math.tan((float)Math.toRadians(fovY/2.0)) * dist;
+		float v = (float)Math.tan(Math.toRadians(fovY/2.0)) * dist;
 		float aspect = pc.aspect;
 		
 		Vector3f q = new Vector3f(targ);
@@ -95,7 +95,6 @@ public abstract class Manip {
 		q.add(arg2);
 		
 		q.sub(eye);
-		//q.normalize();
 		d.set(q);
 	}
 
@@ -107,8 +106,17 @@ public abstract class Manip {
 	 */
 	public void computeAxisRay(Point3f p, Vector3f d) {
 		// TODO
-		PerspectiveCamera pc = (PerspectiveCamera)c;
-		Point3f origin;
+		//PerspectiveCamera pc = (PerspectiveCamera)c;
+		Vector3f dir = new Vector3f();
+		if (axisMode == PICK_X) {
+			dir = new Vector3f(1,0,0);
+		} else if (axisMode == PICK_Y) {
+			dir = new Vector3f(0,1,0);
+		} else if (axisMode == PICK_Z) {
+			dir = new Vector3f(0,0,1);
+		}
+		p.set(0,0,0);
+		d.set(dir);
 	}
 	
 	/**
@@ -125,7 +133,21 @@ public abstract class Manip {
 	 */
 	public float computePseudointersection(Point3f eye, Vector3f direction, Point3f z3, Vector3f a) {
 		// TODO 
-		return 0;
+		Vector3f eyeV = new Vector3f(eye);
+		Vector3f z3V = new Vector3f(z3);
+		float a0 = 2*(direction.dot(direction));
+		float b0 = -2*(direction.dot(a));
+		float a1 = -2*(direction.dot(a));
+		float b1 = 2*(a.dot(a));
+		float inversion = 1/((a0 * b1) - (b0 * a1));
+		a0 *= inversion;
+		a1 *= inversion * -1;
+		
+		float c0 = 2*(-1*eyeV.dot(direction) + (direction.dot(z3V)));
+		float c1 = 2*(eyeV.dot(a) - (z3V.dot(a)));
+	
+		float t = a1 * c0 + a0 * c1;
+		return t;
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////

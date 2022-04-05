@@ -18,6 +18,13 @@ public class RotateManip extends Manip {
 
 	public void dragged(Vector2f mousePosition, Vector2f mouseDelta) {
 		//TODO: Implement this method
+		Vector3f axis = new Vector3f();
+		Point3f origin = new Point3f();
+		computeAxisRay(origin, axis);
+		axis.scale(360);
+		axis.scale(mouseDelta.y);
+		axis.add(t.getRotate());
+		t.setRotate(axis);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
