@@ -22,6 +22,27 @@ public class TranslateManip extends Manip {
 		Vector3f v1 = new Vector3f();
 		Vector3f v2 = new Vector3f();
 		
+		if (axisMode == PICK_OTHER) {
+			computeViewingRay(mousePosition, p2, v2);
+			Vector3f tV1 = new Vector3f(p2);
+			tV1.add(v2);
+			
+			Vector2f oldPos = new Vector2f(mousePosition);
+			oldPos.sub(mouseDelta);
+			computeViewingRay(oldPos, p2, v2);
+			Vector3f tV2 = new Vector3f(p2);
+			tV2.add(v2);
+			
+			tV1.sub(tV2);
+			Vector3f newTrans = new Vector3f(t.getTranslate());
+			newTrans.add(tV1);
+	//System.out.println(newTrans.x+" "+newTrans.y+" "+newTrans.z);
+			t.setTranslate(newTrans);
+			
+			
+			return;
+		}
+		
 		computeAxisRay(p1, v1);
 		computeViewingRay(mousePosition, p2, v2);
 		float t1 = computePseudointersection(p2,v2,p1,v1);
@@ -39,6 +60,7 @@ public class TranslateManip extends Manip {
 		tV1.sub(tV2);
 		Vector3f newTrans = new Vector3f(t.getTranslate());
 		newTrans.add(tV1);
+//System.out.println(newTrans.x+" "+newTrans.y+" "+newTrans.z);
 		t.setTranslate(newTrans);
 	}
 

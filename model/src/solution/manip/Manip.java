@@ -72,8 +72,8 @@ public abstract class Manip {
 		// TODO 
 		PerspectiveCamera pc = (PerspectiveCamera)c;
 		Point3f targ = pc.getTarget();
-		//float fovY= pc.getFovY();
-		float fovY = pc.getHeight();
+		float fovY= pc.getFovY();
+		//float fovY = pc.getHeight();
 		Point3f eye = pc.getEye();
 		p.set(eye);
 		
@@ -135,16 +135,16 @@ public abstract class Manip {
 		// TODO 
 		Vector3f eyeV = new Vector3f(eye);
 		Vector3f z3V = new Vector3f(z3);
-		float a0 = 2*(direction.dot(direction));
-		float b0 = -2*(direction.dot(a));
-		float a1 = -2*(direction.dot(a));
-		float b1 = 2*(a.dot(a));
+		float a0 = (direction.dot(direction));
+		float b0 = -1*(direction.dot(a));
+		float a1 = -1*(direction.dot(a));
+		float b1 = (a.dot(a));
 		float inversion = 1/((a0 * b1) - (b0 * a1));
 		a0 *= inversion;
 		a1 *= inversion * -1;
 		
-		float c0 = 2*(-1*eyeV.dot(direction) + (direction.dot(z3V)));
-		float c1 = 2*(eyeV.dot(a) - (z3V.dot(a)));
+		float c0 = -1*(eyeV.dot(direction) + (direction.dot(z3V)));
+		float c1 = (eyeV.dot(a) - (z3V.dot(a)));
 	
 		float t = a1 * c0 + a0 * c1;
 		return t;

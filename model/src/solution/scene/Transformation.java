@@ -162,9 +162,9 @@ public class Transformation extends SceneNode {
 		
 		gl.glTranslatef(tV.x, tV.y, tV.z);
 	
-		gl.glRotatef(rV.x, 1, 0, 0);
 		gl.glRotatef(rV.z, 0, 0, 1);
 		gl.glRotatef(rV.y, 0, 1, 0);
+		gl.glRotatef(rV.x, 1, 0, 0);
 		
 		gl.glScalef(sV.x, sV.y, sV.z);
 		

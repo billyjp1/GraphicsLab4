@@ -20,6 +20,7 @@ public class RotateManip extends Manip {
 		//TODO: Implement this method
 		Vector3f axis = new Vector3f();
 		Point3f origin = new Point3f();
+		
 		computeAxisRay(origin, axis);
 		axis.scale(360);
 		axis.scale(mouseDelta.y);
